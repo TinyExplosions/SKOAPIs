@@ -17,6 +17,7 @@ module.exports = function responseTime(req, res, next) {
 
         // add path, and time taken to `$fh.stats`
         $fh.stats.timing(path, time);
+        $fh.stats.inc(path);
         Logger.silly(path, 'returned in', time, 'ms');
     });
     // continue on with middleware execution
