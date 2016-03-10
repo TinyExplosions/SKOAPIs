@@ -46,6 +46,7 @@ module.exports = function(grunt) {
       options: {},
       // environment variables - see https://github.com/jsoverson/grunt-env for more information
       local: {
+        DEBUG_LEVEL: 'silly',
         FH_USE_LOCAL_DB: true,
         FH_SERVICE_MAP: function() {
           /*
@@ -137,6 +138,34 @@ module.exports = function(grunt) {
         jshintrc: true
       }
     },
+    clean: {
+      docco: {
+        src: ["docs"]
+     }
+    },
+    copy: {
+      docco: {
+        files: [
+          // includes files within path
+          {          
+            expand: true,
+            cwd: 'rht-docco-theme',
+            src: '**',
+            dest: 'docs/'
+          }
+        ],
+      },
+    },
+    docco: {
+      default: {
+        src: ['application.js', 'util/**/*.js', 'lib/**/*.js'],
+        options: {
+          output: 'docs/',
+          template: 'rht-docco-theme/index.jst',
+          css: 'rht-docco-theme/style.css'
+        }
+      }
+    }
   });
 
   // Load NPM tasks
@@ -161,4 +190,5 @@ module.exports = function(grunt) {
   grunt.registerTask('serve', ['env:local', 'concurrent:serve']);
   grunt.registerTask('debug', ['env:local', 'concurrent:debug']);
   grunt.registerTask('default', ['serve']);
+  grunt.registerTask('document', ['clean:docco', 'docco', 'copy:docco']);
 };

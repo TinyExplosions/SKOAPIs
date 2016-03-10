@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>timer.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" media="all" href="style.css" />
+</head>
+<body>
+  <header><img src="public/images/rh-logo-white.jpg"><h1>timer.js</h1></header>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="application.html">
+                application.js
+              </a>
+            
+              
+              <a class="source" href="hello.html">
+                hello.js
+              </a>
+            
+              
+              <a class="source" href="cache.html">
+                cache.js
+              </a>
+            
+              
+              <a class="source" href="logger.html">
+                logger.js
+              </a>
+            
+              
+              <a class="source" href="timer.html">
+                timer.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>timer.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>onHeaders allows us a listener to when headers are written (at response time)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> $fh = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fh-mbaas-api'</span>),
+    Logger = <span class="hljs-built_in">require</span>(__base + <span class="hljs-string">'util/logger'</span>).getLogger(),
+    onHeaders = <span class="hljs-built_in">require</span>(<span class="hljs-string">'on-headers'</span>);
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">responseTime</span>(<span class="hljs-params">req, res, next</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>get start time of request</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> startAt = process.hrtime(),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>get current path</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        path = req.path;
+
+    onHeaders(res, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onHeaders</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> diff = process.hrtime(startAt);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>convert time to milliseconds</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> time = (diff[<span class="hljs-number">0</span>] * <span class="hljs-number">1e9</span> + diff[<span class="hljs-number">1</span>]) / <span class="hljs-number">1e6</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>add path, and time taken to <code>$fh.stats</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        $fh.stats.timing(path, time);
+        Logger.silly(path, <span class="hljs-string">'returned in'</span>, time, <span class="hljs-string">'ms'</span>);
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>continue on with middleware execution</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    next();
+
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+  <footer>
+    <p>RHMAP Source Documentation</p>
+  </footer>
+</body>
+</html>
