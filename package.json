@@ -5,7 +5,7 @@
   "author": "Al Graham agraham@redhat.com",
   "repository": {
     "type": "git",
-    "url": "git@git.tom.redhatmobile.com:joreilly/SKO-API-Demo-SKO-API-Demo.git"
+    "url": "https://github.com/TinyExplosions/SKOAPIs"
   },
   "main": "application.js",
   "scripts": {
