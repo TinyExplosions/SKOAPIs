@@ -47,6 +47,7 @@ module.exports = function(grunt) {
       // environment variables - see https://github.com/jsoverson/grunt-env for more information
       local: {
         DEBUG_LEVEL: 'silly',
+        JWT_SALT: 'top secret salt boi',
         FH_USE_LOCAL_DB: true,
         FH_SERVICE_MAP: function() {
           /*
@@ -165,7 +166,44 @@ module.exports = function(grunt) {
           css: 'rht-docco-theme/style.css'
         }
       }
-    }
+    },
+    mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    // Require blanket wrapper here to instrument other required 
+                    // files on the fly.  
+                    // 
+                    // NB. We cannot require blanket directly as it 
+                    // detects that we are not running mocha cli and loads differently. 
+                    // 
+                    // NNB. As mocha is 'clever' enough to only run the tests once for 
+                    // each file the following coverage task does not actually run any 
+                    // tests which is why the coverage instrumentation has to be done here 
+                    require: 'coverage/blanket'
+                },
+                src: ['test/**/*.js']
+            },
+            'html-cov': {
+                options: {
+                    reporter: 'html-cov',
+                    // use the quiet flag to suppress the mocha console output 
+                    quiet: true,
+                    // specify a destination file to capture the mocha 
+                    // output (the quiet option does not suppress this) 
+                    captureFile: 'coverage/coverage.html'
+                },
+                src: ['test/**/*.js']
+            },
+            // The travis-cov reporter will fail the tests if the 
+            // coverage falls below the threshold configured in package.json 
+            'travis-cov': {
+                options: {
+                    reporter: 'travis-cov'
+                },
+                src: ['test/**/*.js']
+            }
+        }
   });
 
   // Load NPM tasks

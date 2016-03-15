@@ -48,7 +48,7 @@ Logger.info('Log level:', defaultLogLevel);
 
 // export what's useful
 module.exports = {
-    getLogger: function() {
+    getLogger: function getLogger() {
         return Logger;
     },
     setLoggerLevel: setLoggerLevel,

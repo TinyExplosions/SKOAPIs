@@ -25,8 +25,18 @@
               </a>
             
               
+              <a class="source" href="authenticate.html">
+                authenticate.js
+              </a>
+            
+              
               <a class="source" href="hello.html">
                 hello.js
+              </a>
+            
+              
+              <a class="source" href="authorize.html">
+                authorize.js
               </a>
             
               
@@ -90,6 +100,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>  hello.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Auth"</span>, req.auth);
     <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(), <span class="hljs-string">'In hello route GET / req.query='</span>, req.query);
     <span class="hljs-keyword">var</span> world = req.query &amp;&amp; req.query.hello ? req.query.hello : <span class="hljs-string">'World'</span>;</pre></div></div>
             

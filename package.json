@@ -9,21 +9,28 @@
   },
   "main": "application.js",
   "scripts": {
-    "test": "grunt unit",
+    "test": "grunt mochaTest",
     "debug": "grunt serve",
     "start": "node application.js"
   },
   "dependencies": {
+    "blanket": "^1.2.2",
     "body-parser": "~1.0.2",
     "cors": "~2.2.0",
+    "email-validator": "^1.0.4",
     "express": "~4.0.0",
+    "express-jwt": "^3.3.0",
     "fh-mbaas-api": "5.7.12",
+    "jsonwebtoken": "^5.7.0",
     "on-headers": "^1.0.1",
     "request": "~2.40.0",
     "serve-static": "^1.10.2",
+    "underscore": "^1.8.3",
+    "util": "^0.10.3",
     "winston": "^2.2.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "docco": "^0.7.0",
     "grunt-concurrent": "latest",
     "grunt-contrib-clean": "^1.0.0",
@@ -32,6 +39,7 @@
     "grunt-contrib-watch": "latest",
     "grunt-docco": "^0.4.0",
     "grunt-env": "~0.4.1",
+    "grunt-mocha-test": "^0.12.7",
     "grunt-node-inspector": "~0.1.5",
     "grunt-nodemon": "0.2.0",
     "grunt-open": "~0.2.3",
@@ -40,11 +48,14 @@
     "istanbul": "0.2.7",
     "load-grunt-tasks": "^0.4.0",
     "mocha": "~2.1.0",
+    "mockserver": "^1.5.1",
+    "nock": "^7.2.2",
     "proxyquire": "0.5.3",
     "should": "2.1.1",
     "sinon": "~1.17.2",
-    "supertest": "0.8.2",
-    "time-grunt": "~0.3.2"
+    "supertest": "^1.2.0",
+    "time-grunt": "~0.3.2",
+    "travis-cov": "^0.2.5"
   },
   "license": "mit"
 }

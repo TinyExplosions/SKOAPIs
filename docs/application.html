@@ -25,8 +25,18 @@
               </a>
             
               
+              <a class="source" href="authenticate.html">
+                authenticate.js
+              </a>
+            
+              
               <a class="source" href="hello.html">
                 hello.js
+              </a>
+            
+              
+              <a class="source" href="authorize.html">
+                authorize.js
               </a>
             
               
@@ -76,9 +86,11 @@
     cors = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cors'</span>),
     securableEndpoints,
     serveStatic = <span class="hljs-built_in">require</span>(<span class="hljs-string">'serve-static'</span>),
+    jwt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-jwt'</span>),
     Logger = <span class="hljs-built_in">require</span>(__base + <span class="hljs-string">'util/logger'</span>).getLogger(),
     Cache = <span class="hljs-built_in">require</span>(__base + <span class="hljs-string">'util/cache'</span>),
     Timer = <span class="hljs-built_in">require</span>(__base + <span class="hljs-string">'util/timer'</span>),
+    Authorize = <span class="hljs-built_in">require</span>(__base + <span class="hljs-string">'util/authorize'</span>),
     app = express();</pre></div></div>
             
         </li>
@@ -127,7 +139,11 @@ By default this route is only active when you run locally</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.use(cors());</pre></div></div>
+            <div class="content"><div class='highlight'><pre>app.use(cors());
+
+<span class="hljs-keyword">var</span> tojenizer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jsonwebtoken'</span>);
+<span class="hljs-keyword">var</span> token = tojenizer.sign({ foo: <span class="hljs-string">'bar'</span> }, process.env.JWT_SALT);
+<span class="hljs-built_in">console</span>.log(token);</pre></div></div>
             
         </li>
         
@@ -173,7 +189,9 @@ app.use(<span class="hljs-string">'/mbaas'</span>, mbaasExpress.mbaas);</pre></d
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.use(mbaasExpress.fhmiddleware());</pre></div></div>
+            <div class="content"><div class='highlight'><pre>app.use(mbaasExpress.fhmiddleware());
+
+app.use(Authorize);</pre></div></div>
             
         </li>
         
@@ -188,8 +206,9 @@ app.use(<span class="hljs-string">'/mbaas'</span>, mbaasExpress.mbaas);</pre></d
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.use(Cache);
-app.use(Timer);
+            <div class="content"><div class='highlight'><pre>app.use(Timer);
+app.use(Cache);
+
 app.use(<span class="hljs-string">'/hello'</span>, <span class="hljs-built_in">require</span>(<span class="hljs-string">'./lib/hello.js'</span>)());</pre></div></div>
             
         </li>

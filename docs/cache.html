@@ -25,8 +25,18 @@
               </a>
             
               
+              <a class="source" href="authenticate.html">
+                authenticate.js
+              </a>
+            
+              
               <a class="source" href="hello.html">
                 hello.js
+              </a>
+            
+              
+              <a class="source" href="authorize.html">
+                authorize.js
               </a>
             
               
@@ -71,10 +81,9 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> $fh = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fh-mbaas-api'</span>),
     Logger = <span class="hljs-built_in">require</span>(__base + <span class="hljs-string">'util/logger'</span>).getLogger();
 
-(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cacheMiddleware</span>(<span class="hljs-params">req, res, next</span>) </span>{
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cacheMiddleware</span>(<span class="hljs-params">req, res, next</span>) </span>{
-        Logger.silly(<span class="hljs-string">"in cache Middleware, path is:"</span>, req.path);</pre></div></div>
+    Logger.silly(<span class="hljs-string">"in cache Middleware, path is:"</span>, req.path);</pre></div></div>
             
         </li>
         
@@ -89,7 +98,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        req.pause();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    req.pause();</pre></div></div>
             
         </li>
         
@@ -104,12 +113,12 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $fh.hash({
-            <span class="hljs-string">"algorithm"</span>: <span class="hljs-string">'MD5'</span>,
-            <span class="hljs-string">"text"</span>: req.path
-        }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, result</span>) </span>{
-            req.resume();
-            <span class="hljs-keyword">if</span> (err) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $fh.hash({
+        <span class="hljs-string">"algorithm"</span>: <span class="hljs-string">'MD5'</span>,
+        <span class="hljs-string">"text"</span>: req.path
+    }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hashResult</span>(<span class="hljs-params">err, result</span>) </span>{
+        req.resume();
+        <span class="hljs-keyword">if</span> (err) {</pre></div></div>
             
         </li>
         
@@ -124,9 +133,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                next();
-            } <span class="hljs-keyword">else</span> {
-                Logger.silly(<span class="hljs-string">"Hashed path is:"</span>, result.hashvalue);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            next();
+        } <span class="hljs-keyword">else</span> {
+            Logger.silly(<span class="hljs-string">"Hashed path is:"</span>, result.hashvalue);</pre></div></div>
             
         </li>
         
@@ -141,14 +150,14 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> cacheOptions = {
-                    <span class="hljs-string">"act"</span>: <span class="hljs-string">"load"</span>,
-                    <span class="hljs-string">"key"</span>: result.hashvalue
-                };
-                req.pause();
-                $fh.cache(cacheOptions, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, cachedResult</span>) </span>{
-                    req.resume();
-                    <span class="hljs-keyword">if</span> (err) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> cacheOptions = {
+                <span class="hljs-string">"act"</span>: <span class="hljs-string">"load"</span>,
+                <span class="hljs-string">"key"</span>: result.hashvalue
+            };
+            req.pause();
+            $fh.cache(cacheOptions, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cacheResult</span>(<span class="hljs-params">err, cachedResult</span>) </span>{
+                req.resume();
+                <span class="hljs-keyword">if</span> (err) {</pre></div></div>
             
         </li>
         
@@ -163,7 +172,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                      next();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    next();</pre></div></div>
             
         </li>
         
@@ -178,8 +187,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cachedResult !== <span class="hljs-literal">null</span>) {
-                      Logger.silly(<span class="hljs-string">"cached response is:"</span>,cachedResult);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cachedResult !== <span class="hljs-literal">null</span>) {
+                    Logger.silly(<span class="hljs-string">"cached response is:"</span>, cachedResult);</pre></div></div>
             
         </li>
         
@@ -194,18 +203,15 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                      res.send(<span class="hljs-built_in">JSON</span>.parse(cachedResult));
-                    } <span class="hljs-keyword">else</span> {
-                      next();
-                    }
-                });
-            }
-        });
-    }
+            <div class="content"><div class='highlight'><pre>                    res.send(<span class="hljs-built_in">JSON</span>.parse(cachedResult));
+                } <span class="hljs-keyword">else</span> {
+                    next();
+                }
+            });
+        }
+    });
 
-    <span class="hljs-built_in">module</span>.exports = cacheMiddleware;
-
-}());</pre></div></div>
+}</pre></div></div>
             
         </li>
         

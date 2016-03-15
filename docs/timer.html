@@ -25,8 +25,18 @@
               </a>
             
               
+              <a class="source" href="authenticate.html">
+                authenticate.js
+              </a>
+            
+              
               <a class="source" href="hello.html">
                 hello.js
+              </a>
+            
+              
+              <a class="source" href="authorize.html">
+                authorize.js
               </a>
             
               
@@ -72,7 +82,7 @@
     Logger = <span class="hljs-built_in">require</span>(__base + <span class="hljs-string">'util/logger'</span>).getLogger(),
     onHeaders = <span class="hljs-built_in">require</span>(<span class="hljs-string">'on-headers'</span>);
 
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">responseTime</span>(<span class="hljs-params">req, res, next</span>) </span>{</pre></div></div>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">responseTimerMiddleware</span>(<span class="hljs-params">req, res, next</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -104,7 +114,7 @@
             
             <div class="content"><div class='highlight'><pre>        path = req.path;
 
-    onHeaders(res, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onHeaders</span>(<span class="hljs-params"></span>) </span>{
+    onHeaders(res, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRequestTime</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">var</span> diff = process.hrtime(startAt);</pre></div></div>
             
         </li>
