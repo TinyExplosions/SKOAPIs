@@ -134,7 +134,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      files: ['*.js', 'lib/**/*.js', 'test/**/*.js'],
+      files: ['*.js', 'lib/**/*.js'],
       options: {
         jshintrc: true
       }
@@ -223,17 +223,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Testing tasks
-  grunt.registerTask('test', ['jshint', 'shell:unit', 'shell:accept']);
-  grunt.registerTask('unit', ['jshint', 'shell:unit']);
-  grunt.registerTask('accept', ['env:local', 'shell:accept']);
-
-  // Coverate tasks
-  grunt.registerTask('coverage', ['shell:coverage_unit', 'shell:coverage_accept']);
-  grunt.registerTask('coverage-unit', ['shell:coverage_unit']);
-  grunt.registerTask('coverage-accept', ['env:local', 'shell:coverage_accept']);
-
-
-  grunt.registerTask('analysis', ['plato:src', 'open:platoReport']);
+  grunt.registerTask('test', ['jshint', 'mochaTest']);
 
   grunt.registerTask('serve', ['env:local', 'concurrent:serve']);
   grunt.registerTask('debug', ['env:local', 'concurrent:debug']);

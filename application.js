@@ -7,11 +7,10 @@ var $fh = require('fh-mbaas-api'),
     cors = require('cors'),
     securableEndpoints,
     serveStatic = require('serve-static'),
-    jwt = require('express-jwt'),
     Logger = require(__base + 'util/logger').getLogger(),
     Cache = require(__base + 'util/cache'),
     Timer = require('fh-request-timer'),
-    Authorize = require(__base + 'util/authorize'),
+    // Authorize = require(__base + 'util/authorize'),
     app = express();
 
 // list the endpoints which you want to make securable here
@@ -41,7 +40,7 @@ app.use(mbaasExpress.fhmiddleware());
 app.use('/login', require('./lib/authenticate.js')());
 // app.use(Authorize);
 // use our cache middleware for any routes below it
-app.use(Timer());
+app.use(new Timer());
 app.use(Cache);
 
 app.use('/content', require('./lib/content.js')());
