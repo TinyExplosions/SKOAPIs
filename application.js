@@ -10,7 +10,7 @@ var $fh = require('fh-mbaas-api'),
     jwt = require('express-jwt'),
     Logger = require(__base + 'util/logger').getLogger(),
     Cache = require(__base + 'util/cache'),
-    Timer = require(__base + 'util/timer'),
+    Timer = require('fh-request-timer'),
     Authorize = require(__base + 'util/authorize'),
     app = express();
 
@@ -22,6 +22,7 @@ securableEndpoints = ['/hello'];
 if (!process.env.FH_ENV) {
     app.use('/docs', serveStatic(__dirname + '/docs', { 'index': ['index.html', 'application.html'] }));
     app.use('/coverage', serveStatic(__dirname + '/coverage', { 'index': ['index.html', 'coverage.html'] }));
+    app.use('/blueprint', serveStatic(__dirname + '/blueprint', { 'index': ['index.html', 'api.html'] }));
 }
 
 // Enable CORS for all requests
@@ -38,9 +39,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(mbaasExpress.fhmiddleware());
 
 app.use('/login', require('./lib/authenticate.js')());
-app.use(Authorize);
+// app.use(Authorize);
 // use our cache middleware for any routes below it
-app.use(Timer);
+app.use(Timer());
 app.use(Cache);
 
 app.use('/content', require('./lib/content.js')());

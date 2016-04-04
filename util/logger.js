@@ -4,14 +4,15 @@ var winston = require('winston'),
     defaultLogLevel = 'error';
 
 // set the log level to whatever is specified in the Env Variable `DEBUG_LEVEL`
-if (process.env.DEBUG_LEVEL) {
+if (process.env.DEBUG_LEVEL && checkLogLevel(process.env.DEBUG_LEVEL)) {
     defaultLogLevel = process.env.DEBUG_LEVEL;
 }
 
 // we may want to change log level on the fly, so provide a way to do that
 function setLoggerLevel(params, callback) {
+    callback = callback || function() {};
     var logLevel = params.level;
-    if (['info', 'warn', 'error', 'silly'].indexOf(logLevel) === -1 ) {
+    if (!checkLogLevel(logLevel)) {
         return callback({
             status: 'not ok',
             msg: logLevel + ' is not a valid logging level'
@@ -36,6 +37,10 @@ function setLoggerLevel(params, callback) {
 // when running tests, we don't need the Logger, so let us be able to kill it
 function killLoggingForTests() {
     Logger.remove(winston.transports.Console);
+}
+
+function checkLogLevel(logLevel) {
+    return (['info', 'warn', 'error', 'silly'].indexOf(logLevel) !== -1);
 }
 
 // add console logger support

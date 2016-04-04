@@ -21,8 +21,10 @@
     "express": "~4.0.0",
     "express-jwt": "^3.3.0",
     "fh-mbaas-api": "5.7.12",
+    "fh-request-timer": "^1.0.1",
     "jsonwebtoken": "^5.7.0",
     "on-headers": "^1.0.1",
+    "pino": "^1.0.0",
     "request": "~2.40.0",
     "serve-static": "^1.10.2",
     "underscore": "^1.8.3",
@@ -32,6 +34,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "docco": "^0.7.0",
+    "grunt-aglio": "^0.4.1",
     "grunt-concurrent": "latest",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-copy": "^1.0.0",
@@ -57,5 +60,5 @@
     "time-grunt": "~0.3.2",
     "travis-cov": "^0.2.5"
   },
-  "license": "mit"
+  "license": "MIT"
 }
