@@ -1,7 +1,7 @@
 node_modules
 *~
 cov-*
-coverage
+coverage.html
 blueprint
 plato
 .idea
